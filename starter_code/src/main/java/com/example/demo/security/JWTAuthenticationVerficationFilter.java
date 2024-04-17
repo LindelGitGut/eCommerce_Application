@@ -6,7 +6,6 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
-import org.springframework.stereotype.Component;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -19,7 +18,7 @@ import java.util.ArrayList;
 //Diese Klasse ist für die Authorisierung verantwortlich (rechte etc), sprich wenn ein Request reinkommt wir dder Header nach dem Secret Gescannt
 // (internal Filter)
 
-@Component
+
 public class JWTAuthenticationVerficationFilter extends BasicAuthenticationFilter {
 
 
