@@ -1,6 +1,6 @@
 package com.example.demo.controllers;
 
-import Service.UserService;
+import com.example.demo.Service.UserService;
 import com.example.demo.model.persistence.Cart;
 import com.example.demo.model.persistence.User;
 import com.example.demo.model.persistence.repositories.CartRepository;

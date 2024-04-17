@@ -1,13 +1,16 @@
 package com.example.demo.security;
 
-import Service.UserService;
+import com.example.demo.Service.UserService;
 import com.example.demo.model.persistence.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 
+
+@Service
 public class UserDetailsServiceimpl implements UserDetailsService {
     UserService userService;
 
