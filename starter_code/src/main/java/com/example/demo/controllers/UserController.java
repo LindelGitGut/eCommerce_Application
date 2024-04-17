@@ -1,5 +1,6 @@
 package com.example.demo.controllers;
 
+import Service.UserService;
 import com.example.demo.model.persistence.Cart;
 import com.example.demo.model.persistence.User;
 import com.example.demo.model.persistence.repositories.CartRepository;
@@ -15,6 +16,9 @@ public class UserController {
 	
 	@Autowired
 	private UserRepository userRepository;
+
+	@Autowired
+	private UserService userService;
 	
 	@Autowired
 	private CartRepository cartRepository;
@@ -37,8 +41,11 @@ public class UserController {
 		Cart cart = new Cart();
 		cartRepository.save(cart);
 		user.setCart(cart);
-		userRepository.save(user);
-		return ResponseEntity.ok(user);
+
+		if (createUserRequest.getPassword() != createUserRequest.getConfirmPassword()){throw new IllegalArgumentException("Password and Confirmed Password does not equal");}
+		else if(createUserRequest.getPassword().length() < 7){throw new IllegalArgumentException("Password must have at least 7 Characters");}
+		else {userService.saveUser(user);
+			return ResponseEntity.ok(user);}
 	}
 	
 }
