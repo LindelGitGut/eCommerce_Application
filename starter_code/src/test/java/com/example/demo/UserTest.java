@@ -12,7 +12,7 @@ import org.springframework.http.ResponseEntity;
 
 public class UserTest {
 
-      UserController userController;
+    static UserController userController;
      UserRepository userRepository = Mockito.mock(UserRepository.class);
      CartRepository cartRepository = Mockito.mock(CartRepository.class);
 
