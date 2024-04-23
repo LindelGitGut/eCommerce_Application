@@ -13,11 +13,11 @@ import org.springframework.http.ResponseEntity;
 public class UserTest {
 
     static UserController userController;
-     UserRepository userRepository = Mockito.mock(UserRepository.class);
-     CartRepository cartRepository = Mockito.mock(CartRepository.class);
+      UserRepository userRepository = Mockito.mock(UserRepository.class);
+      CartRepository cartRepository = Mockito.mock(CartRepository.class);
 
     @BeforeClass
-    public  void setup() throws NoSuchFieldException, IllegalAccessException {
+    public static void setup() throws NoSuchFieldException, IllegalAccessException {
       userController = new UserController();
       Testutils.injectObject(userController, "userRepository", userRepository);
         Testutils.injectObject(userController, "cartRepository", cartRepository);
@@ -25,7 +25,7 @@ public class UserTest {
 
 
     @Test
-    public static void createUserHappyPath(){
+    public void createUserHappyPath(){
 
         CreateUserRequest request = new CreateUserRequest();
         request.setUsername("Alex");
