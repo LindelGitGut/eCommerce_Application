@@ -13,6 +13,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Optional;
+
 @RestController
 @RequestMapping("/api/user")
 public class UserController {
@@ -62,5 +64,21 @@ public class UserController {
 			user.setPassword(bCryptPasswordEncoder.encode(createUserRequest.getPassword()));
 			userService.saveUser(user);
 			return ResponseEntity.ok(user);}
+
+
+
+	//TODO not necessary, delete
+/*	@DeleteMapping("{id}")
+	public ResponseEntity<?> deleteUser(@PathVariable Long id){
+		Optional<User> user = userRepository.findById(id);
+		if (!user.isPresent()){
+			logger.warn("Could not find User with id " + id +" for delete");
+			return ResponseEntity.notFound().build();
+		}
+		else {
+			userRepository.delete(user.get());
+			return ResponseEntity.noContent().build();
+		}
+	}*/
 
 }
