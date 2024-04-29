@@ -12,10 +12,10 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 //exclude default Security Autoconfig
 @SpringBootApplication(exclude = SecurityAutoConfiguration.class)
-public class SareetaApplication {
+public class ECommerceApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(SareetaApplication.class, args);
+		SpringApplication.run(ECommerceApplication.class, args);
 	}
 
 
