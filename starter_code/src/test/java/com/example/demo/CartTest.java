@@ -17,6 +17,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import java.math.BigDecimal;
+import java.util.Optional;
+
+import static org.mockito.Mockito.when;
 
 public class CartTest {
 
@@ -31,9 +34,11 @@ public class CartTest {
     private Cart cart;
 
     //User
-    private final Long USER_ID= 1L;
+    private final Long USER_ID = 1L;
     private final String USER_NAME = "Testuser";
     private final String USER_PASSWORD = "password123";
+
+    private final String WRONG_USERNAME = "MrWrong";
 
     //Item
 
@@ -44,7 +49,8 @@ public class CartTest {
     private final BigDecimal ITEM_PRICE = BigDecimal.valueOf(599.99);
 
     //Cart
-    private final Long cartID = 1L;
+    private final Long CART_ID = 1L;
+    private final int CART_ITEM_COUNT = 3;
 
 
     @BeforeClass
@@ -56,15 +62,20 @@ public class CartTest {
 
     //Setup Objects before each Test
     @Before
-    public void makeObjects(){
+    public void makeObjects() {
+
+        //Cart
+        cart = new Cart();
+        cart.setId(CART_ID);
+
 
         // Setup User
         user = new User();
         user.setId(USER_ID);
         user.setUsername(USER_NAME);
         user.setPassword(USER_PASSWORD);
-        //NOT NEEDED
-        //user.setCart();
+
+        user.setCart(cart);
 
         // Setup Item
         item = new Item();
@@ -73,35 +84,68 @@ public class CartTest {
         item.setName(ITEM_NAME);
         item.setPrice(ITEM_PRICE);
 
-
-
-        cart = new Cart();
-
-
     }
 
 
     @Test
-    public void addToCartHappyPath(){
+    public void addToCartHappyPath() {
         ModifyCartRequest request = new ModifyCartRequest();
         request.setUsername(user.getUsername());
-        request.setQuantity(3);
+        request.setQuantity(CART_ITEM_COUNT);
         request.setItemId(ITEM_ID);
+
+
+        when(userRepository.findByUsername(USER_NAME)).thenReturn(user);
+        when(itemRepository.findById(ITEM_ID)).thenReturn(Optional.ofNullable(item));
+
 
         ResponseEntity<Cart> cartResponseEntity = cartController.addTocart(request);
 
         Assert.assertEquals(cartResponseEntity.getStatusCode(), HttpStatus.OK);
+        Assert.assertEquals(cartResponseEntity.getBody().getItems().contains(item), true);
+        Assert.assertEquals(cartResponseEntity.getBody().getItems().size(), CART_ITEM_COUNT);
 
 
     }
 
     @Test
-    public void addToCartBadPath(){}
+    public void addToCartBadPath() {
+        when(userRepository.findByUsername(USER_NAME)).thenReturn(user);
+        when(itemRepository.findById(ITEM_ID)).thenReturn(Optional.ofNullable(item));
+        // Setting Wrong Username for provoking user not found Response
+        user.setUsername(WRONG_USERNAME);
+        ModifyCartRequest request = new ModifyCartRequest();
+        request.setUsername(user.getUsername());
+        request.setQuantity(CART_ITEM_COUNT);
+        request.setItemId(ITEM_ID);
+
+        ResponseEntity<Cart> cartResponseEntity = cartController.addTocart(request);
+
+        //should return 404 because User is not found
+        Assert.assertEquals(cartResponseEntity.getStatusCode(), HttpStatus.NOT_FOUND);
+
+
+        //setting back to right Username and change item id to provoke Item Not Found
+
+        user.setUsername(USER_NAME);
+
+        request.setUsername(user.getUsername());
+
+        //set wrong Item ID
+        request.setItemId(0);
+
+        ResponseEntity<Cart> cartResponseEntity1 = cartController.addTocart(request);
+        //should return 404 because Items for Cart are not found
+        Assert.assertEquals(cartResponseEntity1.getStatusCode(), HttpStatus.NOT_FOUND);
+
+    }
 
     @Test
-    public void removeFromCartHappyPath(){}
+    public void removeFromCartHappyPath() {
+    }
 
     @Test
-    public void removeFromCartBadPath(){}
+    public void removeFromCartBadPath() {
+    }
 
 }
