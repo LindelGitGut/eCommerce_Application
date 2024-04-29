@@ -8,6 +8,7 @@ import com.example.demo.model.persistence.repositories.UserRepository;
 import com.example.demo.model.requests.CreateUserRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -22,6 +23,9 @@ public class UserController {
 	
 	@Autowired
 	private CartRepository cartRepository;
+
+	@Autowired
+	BCryptPasswordEncoder bCryptPasswordEncoder;
 
 	@GetMapping("/id/{id}")
 	public ResponseEntity<User> findById(@PathVariable Long id) {
@@ -42,9 +46,13 @@ public class UserController {
 		cartRepository.save(cart);
 		user.setCart(cart);
 
-		if (createUserRequest.getPassword() != createUserRequest.getConfirmPassword()){throw new IllegalArgumentException("Password and Confirmed Password does not equal");}
-		else if(createUserRequest.getPassword().length() < 7){throw new IllegalArgumentException("Password must have at least 7 Characters");}
-		else {userService.saveUser(user);
+		if (!createUserRequest.getPassword().equals( createUserRequest.getConfirmPassword())){throw new IllegalArgumentException("Password and Confirmed Password does not equal");}
+		else if(createUserRequest.getPassword() == null || createUserRequest.getPassword().length() < 7){throw new IllegalArgumentException("Password must have at least 7 Characters");}
+		else {
+
+			//Encode Password before saving
+			user.setPassword(bCryptPasswordEncoder.encode(createUserRequest.getPassword()));
+			userService.saveUser(user);
 			return ResponseEntity.ok(user);}
 	}
 	
