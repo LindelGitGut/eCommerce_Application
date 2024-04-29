@@ -3,6 +3,8 @@ package com.example.demo.controllers;
 import java.util.Optional;
 import java.util.stream.IntStream;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -31,15 +33,21 @@ public class CartController {
 	
 	@Autowired
 	private ItemRepository itemRepository;
-	
+
+	Logger logger = LoggerFactory.getLogger(CartController.class.getSimpleName());
+
+	private static final String USER_NOT_FOUND_ERROR = "Could not find User with Username: ";
+	private static final String ITEM_NOT_FOUND_ERROR = "Could not find Item with Provided ID: ";
 	@PostMapping("/addToCart")
 	public ResponseEntity<Cart> addTocart(@RequestBody ModifyCartRequest request) {
 		User user = userRepository.findByUsername(request.getUsername());
 		if(user == null) {
+			logger.warn(USER_NOT_FOUND_ERROR + request.getUsername());
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
 		}
 		Optional<Item> item = itemRepository.findById(request.getItemId());
 		if(!item.isPresent()) {
+			logger.warn(ITEM_NOT_FOUND_ERROR+request.getItemId());
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
 		}
 		Cart cart = user.getCart();
@@ -53,10 +61,12 @@ public class CartController {
 	public ResponseEntity<Cart> removeFromcart(@RequestBody ModifyCartRequest request) {
 		User user = userRepository.findByUsername(request.getUsername());
 		if(user == null) {
+			logger.warn(USER_NOT_FOUND_ERROR+request.getUsername());
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
 		}
 		Optional<Item> item = itemRepository.findById(request.getItemId());
 		if(!item.isPresent()) {
+			logger.warn(ITEM_NOT_FOUND_ERROR+request.getItemId());
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
 		}
 		Cart cart = user.getCart();
