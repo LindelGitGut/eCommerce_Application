@@ -142,10 +142,47 @@ public class CartTest {
 
     @Test
     public void removeFromCartHappyPath() {
+        when(userRepository.findByUsername(USER_NAME)).thenReturn(user);
+        when(itemRepository.findById(ITEM_ID)).thenReturn(Optional.ofNullable(item));
+
+
+        ModifyCartRequest request = new ModifyCartRequest();
+        request.setUsername(user.getUsername());
+        request.setQuantity(CART_ITEM_COUNT);
+        request.setItemId(ITEM_ID);
+
+        ResponseEntity<Cart> cartResponseEntity = cartController.removeFromcart(request);
+        Assert.assertEquals(cartResponseEntity.getStatusCode(), HttpStatus.OK);
+
     }
 
     @Test
     public void removeFromCartBadPath() {
+        when(userRepository.findByUsername(USER_NAME)).thenReturn(user);
+        when(itemRepository.findById(ITEM_ID)).thenReturn(Optional.ofNullable(item));
+
+        ModifyCartRequest request = new ModifyCartRequest();
+
+        //Setting Wrong Username
+
+        user.setUsername(WRONG_USERNAME);
+        request.setUsername(user.getUsername());
+        request.setQuantity(CART_ITEM_COUNT);
+        request.setItemId(ITEM_ID);
+
+        ResponseEntity<Cart> cartResponseEntity = cartController.removeFromcart(request);
+        Assert.assertEquals(cartResponseEntity.getStatusCode(), HttpStatus.NOT_FOUND);
+
+        //Setting back to right Username and Wrong Item ID
+
+        user.setUsername(USER_NAME);
+        request.setUsername(user.getUsername());
+
+        request.setItemId(0);
+
+        ResponseEntity<Cart> cartResponseEntity1 = cartController.removeFromcart(request);
+        Assert.assertEquals(cartResponseEntity.getStatusCode(), HttpStatus.NOT_FOUND);
+
     }
 
 }
