@@ -101,9 +101,9 @@ public class CartTest {
 
         ResponseEntity<Cart> cartResponseEntity = cartController.addTocart(request);
 
-        Assert.assertEquals(cartResponseEntity.getStatusCode(), HttpStatus.OK);
-        Assert.assertEquals(cartResponseEntity.getBody().getItems().contains(item), true);
-        Assert.assertEquals(cartResponseEntity.getBody().getItems().size(), CART_ITEM_COUNT);
+        Assert.assertEquals(HttpStatus.OK, cartResponseEntity.getStatusCode());
+        Assert.assertEquals( true,cartResponseEntity.getBody().getItems().contains(item));
+        Assert.assertEquals( CART_ITEM_COUNT,cartResponseEntity.getBody().getItems().size());
 
 
     }
@@ -136,7 +136,7 @@ public class CartTest {
 
         ResponseEntity<Cart> cartResponseEntity1 = cartController.addTocart(request);
         //should return 404 because Items for Cart are not found
-        Assert.assertEquals(cartResponseEntity1.getStatusCode(), HttpStatus.NOT_FOUND);
+        Assert.assertEquals(HttpStatus.NOT_FOUND,cartResponseEntity1.getStatusCode());
 
     }
 
@@ -152,7 +152,7 @@ public class CartTest {
         request.setItemId(ITEM_ID);
 
         ResponseEntity<Cart> cartResponseEntity = cartController.removeFromcart(request);
-        Assert.assertEquals(cartResponseEntity.getStatusCode(), HttpStatus.OK);
+        Assert.assertEquals(HttpStatus.OK,cartResponseEntity.getStatusCode());
 
     }
 
@@ -171,7 +171,7 @@ public class CartTest {
         request.setItemId(ITEM_ID);
 
         ResponseEntity<Cart> cartResponseEntity = cartController.removeFromcart(request);
-        Assert.assertEquals(cartResponseEntity.getStatusCode(), HttpStatus.NOT_FOUND);
+        Assert.assertEquals(HttpStatus.NOT_FOUND,cartResponseEntity.getStatusCode());
 
         //Setting back to right Username and Wrong Item ID
 
@@ -181,7 +181,7 @@ public class CartTest {
         request.setItemId(0);
 
         ResponseEntity<Cart> cartResponseEntity1 = cartController.removeFromcart(request);
-        Assert.assertEquals(cartResponseEntity.getStatusCode(), HttpStatus.NOT_FOUND);
+        Assert.assertEquals(HttpStatus.NOT_FOUND,cartResponseEntity.getStatusCode());
 
     }
 
