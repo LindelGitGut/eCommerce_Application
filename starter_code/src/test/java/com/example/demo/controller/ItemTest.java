@@ -1,5 +1,6 @@
-package com.example.demo;
+package com.example.demo.controller;
 
+import com.example.demo.Testutils;
 import com.example.demo.controllers.ItemController;
 import com.example.demo.model.persistence.Item;
 import com.example.demo.model.persistence.repositories.ItemRepository;
