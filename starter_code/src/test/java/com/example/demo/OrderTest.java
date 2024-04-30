@@ -26,11 +26,6 @@ import static org.mockito.Mockito.when;
 
 public class OrderTest {
 
-
-
-
-
-
     private static OrderController orderController = new OrderController();
 
     private static UserRepository userRepository = Mockito.mock(UserRepository.class);
