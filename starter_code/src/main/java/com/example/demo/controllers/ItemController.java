@@ -19,7 +19,7 @@ import com.example.demo.model.persistence.repositories.ItemRepository;
 @RequestMapping("/api/item")
 public class ItemController {
 
-	Logger logger = LoggerFactory.getLogger(ItemRepository.class.getSimpleName());
+	Logger logger = LoggerFactory.getLogger(ItemController.class.getSimpleName());
 
 	@Autowired
 	private ItemRepository itemRepository;
