@@ -34,6 +34,8 @@ public class UserTest {
     private User user;
 
     private final String USERNAME = "Testuser";
+
+    private final String PASSWORD = "password";
     private final String SHORT_PASSWORD = "short";
     private final String WRONG_PASSWORD = "wrongpassword";
 
@@ -52,7 +54,7 @@ public class UserTest {
     public void createTestUser(){
         user = new User();
         user.setUsername(USERNAME);
-        user.setPassword("password");
+        user.setPassword(PASSWORD);
         user.setId(ID);
     }
 
