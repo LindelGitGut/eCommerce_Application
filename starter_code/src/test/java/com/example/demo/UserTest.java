@@ -63,7 +63,7 @@ public class UserTest {
         request.setPassword(user.getPassword());
         request.setConfirmPassword(user.getPassword());
         final ResponseEntity<User> responseEntity = userController.createUser(request);
-        Assert.assertEquals(responseEntity.getStatusCode(), HttpStatus.OK);
+        Assert.assertEquals( HttpStatus.OK,responseEntity.getStatusCode());
     }
 
     @Test
@@ -73,7 +73,7 @@ public class UserTest {
         request.setPassword(user.getPassword());
         request.setConfirmPassword(WRONG_PASSWORD);
         final ResponseEntity<User> responseEntity = userController.createUser(request);
-        Assert.assertEquals(responseEntity.getStatusCode(), HttpStatus.BAD_REQUEST);
+        Assert.assertEquals( HttpStatus.BAD_REQUEST,responseEntity.getStatusCode());
     }
 
 
@@ -85,7 +85,7 @@ public class UserTest {
         request.setPassword(SHORT_PASSWORD);
         request.setConfirmPassword(SHORT_PASSWORD);
         final ResponseEntity<User> response = userController.createUser(request);
-        Assert.assertEquals(response.getStatusCode(), HttpStatus.BAD_REQUEST);
+        Assert.assertEquals(HttpStatus.BAD_REQUEST,response.getStatusCode());
     }
 
 
@@ -93,28 +93,28 @@ public class UserTest {
     public void findUserByIdHappyPath(){
         when(this.userRepository.findById(ID)).thenReturn(Optional.ofNullable(user));
         final ResponseEntity<User> response = userController.findById(user.getId());
-        Assert.assertEquals(response.getStatusCode(), HttpStatus.OK);
+        Assert.assertEquals( HttpStatus.OK,response.getStatusCode());
     }
 
     @Test
     public void findUserByIdBadPath(){
         when(this.userRepository.findById(ID)).thenReturn(Optional.ofNullable(user));
         final ResponseEntity<User> response = userController.findById(user.getId()+1);
-        Assert.assertEquals(response.getStatusCode(), HttpStatus.NOT_FOUND);
+        Assert.assertEquals(HttpStatus.NOT_FOUND,response.getStatusCode());
     }
 
     @Test
     public void findUserByNameHappyPath(){
         when(this.userRepository.findByUsername(USERNAME)).thenReturn(user);
         final ResponseEntity<User> response = userController.findByUserName(USERNAME);
-        Assert.assertEquals(response.getStatusCode(),HttpStatus.OK);
+        Assert.assertEquals(HttpStatus.OK,response.getStatusCode());
     }
 
     @Test
     public void findUserByNameBadPath(){
         when(this.userRepository.findByUsername(USERNAME)).thenReturn(user);
         final ResponseEntity<User> response = userController.findByUserName(USERNAME+"Wrong");
-        Assert.assertEquals(response.getStatusCode(),HttpStatus.NOT_FOUND);
+        Assert.assertEquals(HttpStatus.NOT_FOUND,response.getStatusCode());
     }
 
 
