@@ -65,20 +65,4 @@ public class UserController {
 			userService.saveUser(user);
 			return ResponseEntity.ok(user);}
 
-
-
-	//TODO not necessary, delete
-/*	@DeleteMapping("{id}")
-	public ResponseEntity<?> deleteUser(@PathVariable Long id){
-		Optional<User> user = userRepository.findById(id);
-		if (!user.isPresent()){
-			logger.warn("Could not find User with id " + id +" for delete");
-			return ResponseEntity.notFound().build();
-		}
-		else {
-			userRepository.delete(user.get());
-			return ResponseEntity.noContent().build();
-		}
-	}*/
-
 }
