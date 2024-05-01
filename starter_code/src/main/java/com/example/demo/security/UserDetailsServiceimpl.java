@@ -2,6 +2,7 @@ package com.example.demo.security;
 
 import com.example.demo.Service.UserService;
 import com.example.demo.model.persistence.User;
+import com.example.demo.model.persistence.repositories.UserRepository;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -12,16 +13,19 @@ import java.util.ArrayList;
 
 @Service
 public class UserDetailsServiceimpl implements UserDetailsService {
-    UserService userService;
+   // UserService userService;
 
-    public UserDetailsServiceimpl(UserService userService) {
-        this.userService = userService;
+    UserRepository userRepository;
+
+    public UserDetailsServiceimpl(UserService userService, UserRepository userRepository) {
+     //   this.userService = userService;
+        this.userRepository = userRepository;
     }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
-        User user = userService.findUserByName(username);
+        User user = userRepository.findByUsername(username);
 
         if (user == null) {
             throw new UsernameNotFoundException("User with Username: " + username + " not found");
