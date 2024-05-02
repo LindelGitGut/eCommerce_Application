@@ -28,7 +28,9 @@ public class JWTAuthenticationVerficationFilter extends BasicAuthenticationFilte
     private static final Logger log = LoggerFactory.getLogger(JWTAuthenticationVerficationFilter.class.getSimpleName());
 
     private static final String USER_NOT_EXIST_ERROR = "User doesn't exist";
-    private static final String WRONG_AUTH_TOKEN_ERROR = "Authorization Token is Missing or Wrong";
+    private static final String WRONG_AUTH_TOKEN_ERROR = "Authorization Token is Wrong";
+
+    private static final String NO_TOKEN_ERROR ="No Authorization Token found!";
 
 
     public JWTAuthenticationVerficationFilter(AuthenticationManager authenticationManager) {
@@ -65,7 +67,7 @@ public class JWTAuthenticationVerficationFilter extends BasicAuthenticationFilte
             }
             return null;
         }
-        log.warn(WRONG_AUTH_TOKEN_ERROR);
+        log.warn(NO_TOKEN_ERROR);
         return null;
     }
 }
