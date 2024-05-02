@@ -2,6 +2,8 @@ package com.example.demo.security;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -23,6 +25,11 @@ public class JWTAuthenticationVerficationFilter extends BasicAuthenticationFilte
 
 
 
+    private static final Logger log = LoggerFactory.getLogger(JWTAuthenticationVerficationFilter.class.getSimpleName());
+
+    private static final String USER_NOT_EXIST_ERROR = "User doesn't exist";
+    private static final String WRONG_AUTH_TOKEN_ERROR = "Authorization Token is Missing or Wrong";
+
 
     public JWTAuthenticationVerficationFilter(AuthenticationManager authenticationManager) {
         super(authenticationManager);
@@ -34,6 +41,7 @@ public class JWTAuthenticationVerficationFilter extends BasicAuthenticationFilte
         String header = request.getHeader(SecurityConstants.HEADER_STRING);
 
         if (header == null || !header.startsWith(SecurityConstants.TOKEN_PREFIX)){
+            log.warn(WRONG_AUTH_TOKEN_ERROR);
             chain.doFilter(request, response);
             return;
         }
@@ -52,10 +60,12 @@ public class JWTAuthenticationVerficationFilter extends BasicAuthenticationFilte
                     .getSubject();
 
             if (user != null){
+                log.warn(USER_NOT_EXIST_ERROR);
                 return new UsernamePasswordAuthenticationToken(user,null,new ArrayList<>());
             }
             return null;
         }
+        log.warn(WRONG_AUTH_TOKEN_ERROR);
         return null;
     }
 }
