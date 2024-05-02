@@ -1,15 +1,12 @@
 package com.example.demo.repo;
 
-
 import com.example.demo.model.persistence.Item;
 import com.example.demo.model.persistence.repositories.ItemRepository;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.test.context.junit4.SpringRunner;
 
 import java.math.BigDecimal;
 import java.util.Arrays;
@@ -17,7 +14,7 @@ import java.util.List;
 import java.util.Optional;
 
 @DataJpaTest
-@RunWith(SpringRunner.class)
+//@RunWith(SpringRunner.class)
 public class ItemRepoTest {
 
 
@@ -45,7 +42,7 @@ public class ItemRepoTest {
     private static final BigDecimal ITEM_PRICE = BigDecimal.valueOf(99.99);
 
 
-    @Before
+    @BeforeEach
     public void createObjects(){
         item = new Item();
         item.setName(ITEM_NAME);
@@ -68,8 +65,8 @@ public class ItemRepoTest {
     @Test
     public void getItemsByName(){
         List<Item> items = itemRepository.findByName(ITEM_NAME);
-        Assert.assertEquals(2, items.size());
-        Assert.assertTrue(items.containsAll(Arrays.asList(item,item2)));
+        Assertions.assertEquals(2, items.size());
+        Assertions.assertTrue(items.containsAll(Arrays.asList(item,item2)));
     }
 
     @Test
@@ -77,8 +74,8 @@ public class ItemRepoTest {
         Optional<Item> testItem1 = itemRepository.findById(item.getId());
         Optional<Item> testItem2 = itemRepository.findById(item2.getId());
 
-        Assert.assertTrue(testItem1.isPresent());
-        Assert.assertTrue(testItem2.isPresent());
+        Assertions.assertTrue(testItem1.isPresent());
+        Assertions.assertTrue(testItem2.isPresent());
 
     }
 

@@ -3,18 +3,15 @@ package com.example.demo.repo;
 
 import com.example.demo.model.persistence.User;
 import com.example.demo.model.persistence.repositories.UserRepository;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.test.context.junit4.SpringRunner;
-
+import org.springframework.test.annotation.DirtiesContext;
 
 @DataJpaTest
-@RunWith(SpringRunner.class)
+@DirtiesContext
 public class UserRepoTest {
 
     @Autowired
@@ -31,7 +28,7 @@ public class UserRepoTest {
     private final Long USER_ID = 1L;
 
 
-    @Before
+    @BeforeEach
     public void createObjects(){
         user = new User();
         user.setId(USER_ID);
@@ -45,7 +42,7 @@ public class UserRepoTest {
     @Test
     public void getUserByUserName(){
         User searchUser = userRepository.findByUsername(USERNAME);
-        Assert.assertTrue(searchUser.equals(user));
+        Assertions.assertTrue(searchUser.equals(user));
     }
 
 }

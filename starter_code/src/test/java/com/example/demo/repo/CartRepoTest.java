@@ -1,25 +1,20 @@
 package com.example.demo.repo;
 
-
 import com.example.demo.model.persistence.Cart;
 import com.example.demo.model.persistence.User;
 import com.example.demo.model.persistence.repositories.CartRepository;
 import com.example.demo.model.persistence.repositories.UserRepository;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.context.annotation.Import;
 import org.springframework.test.annotation.DirtiesContext;
-import org.springframework.test.context.junit4.SpringRunner;
 
 import java.math.BigDecimal;
 
 @DataJpaTest
-@RunWith(SpringRunner.class)
-
+@DirtiesContext
 public class CartRepoTest {
     @Autowired
     private CartRepository cartRepository;
@@ -41,7 +36,7 @@ public class CartRepoTest {
     private final BigDecimal TOTAL_CART_PRICE = BigDecimal.valueOf(99.99);
 
 
-    @Before
+    @BeforeEach
     public void createObjects(){
         user = new User();
         user.setUsername(USER_NAME);
@@ -59,7 +54,7 @@ public class CartRepoTest {
     @Test
     public void getCartFromUser(){
         Cart cart = cartRepository.findByUser(user);
-        Assert.assertEquals(TOTAL_CART_PRICE, cart.getTotal());
+        Assertions.assertEquals(TOTAL_CART_PRICE, cart.getTotal());
     }
 
 

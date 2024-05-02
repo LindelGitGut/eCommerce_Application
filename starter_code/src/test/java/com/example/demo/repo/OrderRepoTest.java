@@ -1,6 +1,5 @@
 package com.example.demo.repo;
 
-
 import com.example.demo.model.persistence.Cart;
 import com.example.demo.model.persistence.Item;
 import com.example.demo.model.persistence.User;
@@ -8,20 +7,19 @@ import com.example.demo.model.persistence.UserOrder;
 import com.example.demo.model.persistence.repositories.ItemRepository;
 import com.example.demo.model.persistence.repositories.OrderRepository;
 import com.example.demo.model.persistence.repositories.UserRepository;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.annotation.DirtiesContext;
 
 import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.List;
 
 @DataJpaTest
-@RunWith(SpringRunner.class)
+@DirtiesContext
 public class OrderRepoTest {
 
     @Autowired
@@ -61,7 +59,7 @@ public class OrderRepoTest {
     private UserOrder order;
 
 
-    @Before
+    @BeforeEach
     public void CreateObjects() {
         user = new User();
         user.setId(USER_ID);
@@ -102,12 +100,12 @@ public class OrderRepoTest {
     @Test
     public void findOrdersByUser() {
         List<UserOrder> orders = orderRepository.findByUser(user);
-        Assert.assertEquals(1, orders.size());
-        Assert.assertEquals(3,orders.get(0).getItems().size());
-        Assert.assertTrue(orders.get(0).getItems().containsAll(Arrays.asList(item,item2,item3)));
-        Assert.assertTrue(orders.get(0).getItems().get(0).equals(item));
-        Assert.assertTrue(orders.get(0).getItems().get(1).equals(item2));
-        Assert.assertTrue(orders.get(0).getItems().get(2).equals(item3));
+        Assertions.assertEquals(1, orders.size());
+        Assertions.assertEquals(3,orders.get(0).getItems().size());
+        Assertions.assertTrue(orders.get(0).getItems().containsAll(Arrays.asList(item,item2,item3)));
+        Assertions.assertTrue(orders.get(0).getItems().get(0).equals(item));
+        Assertions.assertTrue(orders.get(0).getItems().get(1).equals(item2));
+        Assertions.assertTrue(orders.get(0).getItems().get(2).equals(item3));
     }
 
 
