@@ -63,6 +63,7 @@ public class UserController {
 			//Encode Password before saving
 			user.setPassword(bCryptPasswordEncoder.encode(createUserRequest.getPassword()));
 			userService.saveUser(user);
+			logger.info(""+createUserRequest.getUsername() + " created successfully. User ID: "+user.getId());
 			return ResponseEntity.ok(user);}
 
 }

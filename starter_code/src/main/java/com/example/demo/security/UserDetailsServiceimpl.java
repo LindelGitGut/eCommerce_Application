@@ -13,7 +13,6 @@ import java.util.ArrayList;
 
 @Service
 public class UserDetailsServiceimpl implements UserDetailsService {
-   // UserService userService;
 
     UserRepository userRepository;
 
@@ -25,13 +24,18 @@ public class UserDetailsServiceimpl implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
-        User user = userRepository.findByUsername(username);
+        User user;
+        try {
+            user = userRepository.findByUsername(username);
+        } catch (Exception e) {
+            user = null;
+        }
 
         if (user == null) {
             throw new UsernameNotFoundException("User with Username: " + username + " not found");
         }
 
-        System.out.println("User was found!: " + user.getUsername()+ " password: " + user.getPassword());
+        System.out.println("User was found!: " + user.getUsername() + " password: " + user.getPassword());
         return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), new ArrayList<>());
     }
 
