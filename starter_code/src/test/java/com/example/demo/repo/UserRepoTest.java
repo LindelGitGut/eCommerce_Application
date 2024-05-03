@@ -42,7 +42,7 @@ public class UserRepoTest {
     @Test
     public void getUserByUserName(){
         User searchUser = userRepository.findByUsername(USERNAME);
-        Assertions.assertTrue(searchUser.equals(user));
+        Assertions.assertEquals(searchUser, user);
     }
 
 }

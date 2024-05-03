@@ -94,62 +94,31 @@ public class UserTest {
 
     @Test
     public void findUserByIdHappyPath(){
-        when(this.userRepository.findById(ID)).thenReturn(Optional.ofNullable(user));
+        when(userRepository.findById(ID)).thenReturn(Optional.ofNullable(user));
         final ResponseEntity<User> response = userController.findById(user.getId());
         Assert.assertEquals( HttpStatus.OK,response.getStatusCode());
     }
 
     @Test
     public void findUserByIdBadPath(){
-        when(this.userRepository.findById(ID)).thenReturn(Optional.ofNullable(user));
+        when(userRepository.findById(ID)).thenReturn(Optional.ofNullable(user));
         final ResponseEntity<User> response = userController.findById(user.getId()+1);
         Assert.assertEquals(HttpStatus.NOT_FOUND,response.getStatusCode());
     }
 
     @Test
     public void findUserByNameHappyPath(){
-        when(this.userRepository.findByUsername(USERNAME)).thenReturn(user);
+        when(userRepository.findByUsername(USERNAME)).thenReturn(user);
         final ResponseEntity<User> response = userController.findByUserName(USERNAME);
         Assert.assertEquals(HttpStatus.OK,response.getStatusCode());
     }
 
     @Test
     public void findUserByNameBadPath(){
-        when(this.userRepository.findByUsername(USERNAME)).thenReturn(user);
+        when(userRepository.findByUsername(USERNAME)).thenReturn(user);
         final ResponseEntity<User> response = userController.findByUserName(USERNAME+"Wrong");
         Assert.assertEquals(HttpStatus.NOT_FOUND,response.getStatusCode());
     }
-
-
-
-
-    //TODO check if should be deleted because delete is not necessary
- /*   @Test
-    public void deleteUserByIdHappyPath(){
-        CreateUserRequest request = new CreateUserRequest();
-        request.setUsername("Alex");
-        request.setPassword("password");
-        request.setConfirmPassword("password");
-        final ResponseEntity<User> responseEntity = userController.createUser(request);
-        Assert.assertEquals(responseEntity.getStatusCode(), HttpStatus.OK);
-        ResponseEntity<?> responseEntity1 = userController.deleteUser(ID);
-        Assert.assertEquals(responseEntity1.getStatusCode(), HttpStatus.NO_CONTENT);
-
-    }*/
-
-  /*  @Test
-    public void deleteUserByIdBadPath(){
-        CreateUserRequest request = new CreateUserRequest();
-        request.setUsername("Alex");
-        request.setPassword("password");
-        request.setConfirmPassword("password");
-        final ResponseEntity<User> responseEntity = userController.createUser(request);
-        Assert.assertEquals(responseEntity.getStatusCode(), HttpStatus.OK);
-        ResponseEntity<?> responseEntity1 = userController.deleteUser(responseEntity.getBody().getId()+1);
-        Assert.assertEquals(responseEntity1.getStatusCode(), HttpStatus.NOT_FOUND);
-    }*/
-
-
 
 
 }

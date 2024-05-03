@@ -15,11 +15,11 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
-    private UserService userService;
+    private final UserService userService;
 
-    private UserDetailsServiceimpl userDetailsServiceimpl;
+    private final UserDetailsServiceimpl userDetailsServiceimpl;
 
-    private BCryptPasswordEncoder bCryptPasswordEncoder;
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     public WebSecurityConfiguration(UserService userService, BCryptPasswordEncoder bCryptPasswordEncoder, UserDetailsServiceimpl userDetailsServiceimpl) {
         this.userService = userService;

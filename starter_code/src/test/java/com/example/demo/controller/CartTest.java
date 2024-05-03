@@ -25,10 +25,10 @@ import static org.mockito.Mockito.when;
 public class CartTest {
 
 
-    private static CartController cartController = new CartController();
-    private static CartRepository cartRepository = Mockito.mock(CartRepository.class);
-    private static UserRepository userRepository = Mockito.mock(UserRepository.class);
-    private static ItemRepository itemRepository = Mockito.mock(ItemRepository.class);
+    private static final CartController cartController = new CartController();
+    private static final CartRepository cartRepository = Mockito.mock(CartRepository.class);
+    private static final UserRepository userRepository = Mockito.mock(UserRepository.class);
+    private static final ItemRepository itemRepository = Mockito.mock(ItemRepository.class);
 
     private User user;
     private Item item;
@@ -103,7 +103,7 @@ public class CartTest {
         ResponseEntity<Cart> cartResponseEntity = cartController.addTocart(request);
 
         Assert.assertEquals(HttpStatus.OK, cartResponseEntity.getStatusCode());
-        Assert.assertEquals( true,cartResponseEntity.getBody().getItems().contains(item));
+        Assert.assertTrue(cartResponseEntity.getBody().getItems().contains(item));
         Assert.assertEquals( CART_ITEM_COUNT,cartResponseEntity.getBody().getItems().size());
 
 

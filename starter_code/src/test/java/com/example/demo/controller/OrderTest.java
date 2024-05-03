@@ -16,22 +16,21 @@ import org.junit.Test;
 import org.mockito.Mockito;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-
 import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
-import static org.mockito.ArgumentMatchers.any;
+
 import static org.mockito.Mockito.when;
 
 public class OrderTest {
 
-    private static OrderController orderController = new OrderController();
+    private static final OrderController orderController = new OrderController();
 
-    private static UserRepository userRepository = Mockito.mock(UserRepository.class);
+    private static final UserRepository userRepository = Mockito.mock(UserRepository.class);
 
-    private static OrderRepository orderRepository = Mockito.mock(OrderRepository.class);
+    private static final OrderRepository orderRepository = Mockito.mock(OrderRepository.class);
 
 
     private User user;
@@ -56,7 +55,7 @@ public class OrderTest {
 
     private final BigDecimal ITEM_PRICE = BigDecimal.valueOf(599.99);
     private final BigDecimal ITEM_PRICE2 = BigDecimal.valueOf(99.99);
-    private final BigDecimal ITEM_PRICE3 = BigDecimal.valueOf(10.99);;
+    private final BigDecimal ITEM_PRICE3 = BigDecimal.valueOf(10.99);
 
     //Cart
     private final Long CART_ID = 1L;
@@ -169,8 +168,6 @@ public class OrderTest {
 
         Assert.assertEquals( HttpStatus.OK, ordersForUser.getStatusCode());
 
-        //TODO check if Values in List are correct
-
     }
 
     @Test
@@ -178,7 +175,7 @@ public class OrderTest {
 
         //Username not found
         when(userRepository.findByUsername(USER_NAME)).thenReturn(this.user);
-        when(orderRepository.findByUser(user)).thenReturn(Arrays.asList(UserOrder.createFromCart(user.getCart())));
+        when(orderRepository.findByUser(user)).thenReturn(Collections.singletonList(UserOrder.createFromCart(user.getCart())));
 
         ResponseEntity<List<UserOrder>> ordersForUser = orderController.getOrdersForUser(WRONG_USERNAME);
 

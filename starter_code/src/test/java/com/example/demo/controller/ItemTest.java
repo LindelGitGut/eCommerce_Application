@@ -22,9 +22,9 @@ import static org.mockito.Mockito.when;
 public class ItemTest {
 
 
-    private static ItemRepository itemRepository = Mockito.mock(ItemRepository.class);
+    private static final ItemRepository itemRepository = Mockito.mock(ItemRepository.class);
 
-    private static ItemController itemController = new ItemController();
+    private static final ItemController itemController = new ItemController();
 
     //Item 1
     private Item item;

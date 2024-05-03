@@ -103,9 +103,9 @@ public class OrderRepoTest {
         Assertions.assertEquals(1, orders.size());
         Assertions.assertEquals(3,orders.get(0).getItems().size());
         Assertions.assertTrue(orders.get(0).getItems().containsAll(Arrays.asList(item,item2,item3)));
-        Assertions.assertTrue(orders.get(0).getItems().get(0).equals(item));
-        Assertions.assertTrue(orders.get(0).getItems().get(1).equals(item2));
-        Assertions.assertTrue(orders.get(0).getItems().get(2).equals(item3));
+        Assertions.assertEquals(orders.get(0).getItems().get(0), item);
+        Assertions.assertEquals(orders.get(0).getItems().get(1), item2);
+        Assertions.assertEquals(orders.get(0).getItems().get(2), item3);
     }
 
 
