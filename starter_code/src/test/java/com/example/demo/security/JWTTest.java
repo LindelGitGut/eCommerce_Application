@@ -71,6 +71,6 @@ public class JWTTest {
 
         // Test Restricted Access without Token, should give back forbidden
         mockMvc.perform(MockMvcRequestBuilders.get("/api/item").contentType(MediaType.APPLICATION_JSON))
-                .andExpect(MockMvcResultMatchers.status().isForbidden());
+                .andExpect(MockMvcResultMatchers.status().isUnauthorized());
     }
 }
